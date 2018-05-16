@@ -18,11 +18,13 @@ class FilterForm extends Component {
             <form id="searchbar" className="input-group" onSubmit={this.onFormSubmit} >
                 <p>Filter the search :</p>
                 <input id="min" className="form-control date"
+                    value={this.state.min}
                     placeholder="DT"
                     type="date"
                     onChange={this.onInputChange}
                     />
                 <input id="max" className="form-control date"
+                    value={this.state.max}
                     placeholder="END_DT"
                     type="date"
                     onChange={this.onInputChange}
@@ -44,7 +46,7 @@ class FilterForm extends Component {
         // fetch weather
         this.props.filterWeather(this.state.term)
         this.state.known.push(this.state.term)
-        this.state.term = ''
+        this.state.min, this.state.max = new Date.now()
     }
 } // class SearchBar end
 

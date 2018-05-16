@@ -10,11 +10,13 @@ function mapDispatchToProps(dispatch) { // reducer
 class SearchBar extends Component {
     constructor(props) {
         super(props)
-        this.state = {term: ""}
+        this.state = {term: "", known:["Nivelles"]}
+        this.props.fetchWeather(this.state.known)
         this.onInputChange = this.onInputChange.bind(this)
         this.onFormSubmit = this.onFormSubmit.bind(this)
+        console.log(this.state)
     }
-
+    
     render() {
         return(
             <form id="searchbar" className="input-group" onSubmit={this.onFormSubmit} >
@@ -37,9 +39,14 @@ class SearchBar extends Component {
     onFormSubmit = (e) => {
         e.preventDefault()
         // fetch weather
-        this.props.fetchWeather(this.state.term)
-        this.state.known.push(this.state.term)
-        this.state.term = ''
+        const thisTerm = this.state.term
+        if (!this.state.known.includes(thisTerm)) { // If not already known
+            const res = this.props.fetchWeather(thisTerm)
+            if (!res.error) {
+                this.state.known.push(thisTerm)
+            }
+        }
+        this.setState({term:""})
     }
 } // class SearchBar end
 

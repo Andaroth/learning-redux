@@ -19,22 +19,26 @@ class WeatherList extends Component {
     }
 
     renderWeather(cityData) {
-        const forecasttemp = this.getForecastWeather(cityData)
+        if(cityData) {
+            const forecasttemp = this.getForecastWeather(cityData)
         
-        console.log("forecasttemp",forecasttemp)
-        const curr = cityData.current
-        return(
-            
-            <tr id={cityData.location.lat+"_"+cityData.location.lat} key={cityData.location.tz_id+"-lat"+cityData.location.lat+"-lon"+cityData.location.lon}>
-                <td><h2>{cityData.location.name}</h2> <br /><small>({cityData.location.country})</small></td>
-                <td>
-                    <b>{curr.temp_c}</b> °C <br/> {curr.condition.text}
-                </td>
-                <td>
-                    <LineChart data={forecasttemp} download={true} colors={["#f00","#00f"]} />
-                </td>
-            </tr>
-        )
+            console.log("forecasttemp",forecasttemp)
+            const locate = cityData.location
+            const curr = cityData.current
+            return(
+                
+                <tr id={locate.lat+"_"+locate.lat} key={locate.tz_id+"-lat"+locate.lat+"-lon"+locate.lon}>
+                    <td><h2>{locate.name}</h2> <br /><small>({locate.country})</small></td>
+                    <td>
+                        <b>{curr.temp_c}</b> °C <br/> {curr.condition.text}
+                    </td>
+                    <td>
+                        <LineChart data={forecasttemp} download={true} colors={["#f00","#00f"]} />
+                    </td>
+                </tr>
+            )
+        }
+        
     }
 
     getFilterWeather(cityData) {
